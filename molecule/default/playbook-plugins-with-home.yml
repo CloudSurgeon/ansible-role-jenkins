@@ -8,6 +8,7 @@
       - ghprb
       - greenballs
       - {name: cloudbees-folder, version: 6.11}
+      - {name: delphix, version: 2.0.4}
     jenkins_home: /tmp/jenkins
     jenkins_plugin_timeout: 120
 
@@ -34,6 +35,10 @@
       changed_when: false
       tags: ['skip_ansible_lint']
 
+    - name: Print list of installed plugins
+      debug:
+        msg: "{{ plugins_contents }}"
+
     - name: Verify greenballs plugin exists.
       stat:
         path: "{{ jenkins_home }}/plugins/greenballs.jpi"
@@ -51,6 +56,14 @@
     - name: Fail if cloudbees-folder plugin file doesn't exist.
       fail:
       when: not folder_plugin.stat.exists
+    - name: Verify delphix plugin exists.
+      stat:
+        path: "{{ jenkins_home }}/plugins/delphix.jpi"
+      register: delphix_plugin
+
+    - name: Fail if delphix plugin file doesn't exist.
+      fail:
+      when: not delphix_plugin.stat.exists
 
     - name: Ensure Jenkins is running.
       uri:
