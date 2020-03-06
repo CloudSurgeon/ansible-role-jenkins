@@ -11,7 +11,11 @@
   get_url:
     url: "{{ jenkins_repo_url }}"
     dest: /etc/yum.repos.d/jenkins.repo
+<<<<<<< HEAD
   when: jenkins_repo_url | default(false)
+=======
+  when: jenkins_repo_url != ""
+>>>>>>> 01da797dd98b07b8652770046d4b0b7e06abfc0b
   register: get_result
   until: get_result is success
   retries: 3
@@ -22,7 +26,11 @@
   rpm_key:
     state: present
     key: "{{ jenkins_repo_key_url }}"
+<<<<<<< HEAD
   when: jenkins_repo_url | default(false)
+=======
+  when: jenkins_repo_url != ''
+>>>>>>> 01da797dd98b07b8652770046d4b0b7e06abfc0b
   register: get_result
   until: get_result is success
   retries: 3
